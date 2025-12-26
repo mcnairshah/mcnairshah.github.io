@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const ChladniBackground = () => {
+const ChladniBackground = ({ muted }) => {
     const canvasRef = useRef(null);
     const audioContextRef = useRef(null);
     const oscillatorRef = useRef(null);
@@ -173,7 +173,7 @@ const ChladniBackground = () => {
             oscillatorRef.current.type = 'sine';
 
             gainNodeRef.current = audioContextRef.current.createGain();
-            gainNodeRef.current.gain.value = 0.05; // Low volume
+            gainNodeRef.current.gain.value = muted ? 0 : 0.05; // Check muted state
 
             oscillatorRef.current.connect(gainNodeRef.current);
             gainNodeRef.current.connect(audioContextRef.current.destination);
@@ -185,8 +185,17 @@ const ChladniBackground = () => {
         }
     };
 
+    // React to muted prop change
+    useEffect(() => {
+        if (gainNodeRef.current && audioContextRef.current) {
+            const targetGain = muted ? 0 : 0.05;
+            // Ramp to new value quickly to avoid clicks
+            gainNodeRef.current.gain.setTargetAtTime(targetGain, audioContextRef.current.currentTime, 0.1);
+        }
+    }, [muted]);
+
     const handleMouseEnter = () => {
-        if (gainNodeRef.current) {
+        if (gainNodeRef.current && !muted) {
             gainNodeRef.current.gain.setTargetAtTime(0.05, audioContextRef.current.currentTime, 0.1);
         }
     };
