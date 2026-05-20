@@ -22,7 +22,13 @@ const Home = () => {
                 boxSizing: 'border-box',
                 pointerEvents: 'none' // Allow clicks to pass through to canvas
             }}>
-                <div style={{ pointerEvents: 'auto' }}>
+                <div style={{
+                    pointerEvents: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    gap: '1.5rem'
+                }}>
                     <h1 className="fade-shadow" style={{
                         fontSize: 'clamp(2rem, 5vw, 4rem)',
                         fontWeight: 600,
@@ -30,6 +36,21 @@ const Home = () => {
                     }}>
                         McNair Shah
                     </h1>
+                    <a
+                        href="https://calendar.app.google/zNMWphEqCBhk2EcY6"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="fade-shadow"
+                        style={{
+                            fontSize: '1rem',
+                            padding: '0.6rem 1.2rem',
+                            border: '1px solid rgba(255, 215, 0, 0.4)',
+                            borderRadius: '4px',
+                            display: 'inline-block'
+                        }}
+                    >
+                        Meet With Me
+                    </a>
                 </div>
 
                 {/* Mute Button */}
